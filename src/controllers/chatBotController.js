@@ -3,26 +3,22 @@ require("dotenv").config();
 const MY_VERIFY_TOKEN = process.env.MY_VERIFY_TOKEN;
 
 let postWebHook = (req, res) => {
-  // Parse the request body from the POST
   let body = req.body;
 
-  // Check the webhook event is from a Page subscription
+  // Checks this is an event from a page subscription
   if (body.object === "page") {
-    // Iterate over each entry - there may be multiple if batched
+    // Iterates over each entry - there may be multiple if batched
     body.entry.forEach(function (entry) {
-      // Gets the body of the webhook event
+      // Gets the message. entry.messaging is an array, but
+      // will only ever contain one message, so we get index 0
       let webhook_event = entry.messaging[0];
       console.log(webhook_event);
-
-      // Get the sender PSID
-      let sender_psid = webhook_event.sender.id;
-      console.log("Sender PSID: " + sender_psid);
     });
 
-    // Return a '200 OK' response to all events
+    // Returns a '200 OK' response to all requests
     res.status(200).send("EVENT_RECEIVED");
   } else {
-    // Return a '404 Not Found' if event is not from a page subscription
+    // Returns a '404 Not Found' if event is not from a page subscription
     res.sendStatus(404);
   }
 };
