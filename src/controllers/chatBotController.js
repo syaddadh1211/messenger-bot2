@@ -1,6 +1,7 @@
 require("dotenv").config();
 
-const MY_VERIFY_TOKEN = process.env.MY_VERIFY_TOKEN;
+const MY_VERIFY_TOKEN = "abc123456";
+//process.env.MY_VERIFY_TOKEN;
 
 let postWebHook = (req, res) => {
   let body = req.body;
